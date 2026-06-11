@@ -1,0 +1,12 @@
+<div style="padding: 20px; border: 1px dashed #ccc; margin-top: 20px;">
+    <h2>Halaman Pemesanan</h2>
+    <p>{{ infoPesan }}</p>
+            
+    <h3>Katalog Paket Tersedia:</h3>
+    <ul>
+        <li v-for="pkt in paketList" :key="pkt.kode">
+            <b>{{ pkt.nama }}</b> - Rp {{ pkt.harga.toLocaleString('id-ID') }}
+            <br><small>Isi: {{ pkt.isi.join(', ') }}</small>
+        </li>
+    </ul>
+</div>

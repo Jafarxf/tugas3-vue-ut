@@ -1,0 +1,110 @@
+<div class="stock-container">
+    <h2>Daftar Stok Bahan Ajar</h2>
+    
+    <div class="form-section">
+        <h3>Tambah Bahan Ajar Baru</h3>
+        
+        <div class="form-grid">
+            <input type="text" v-model="formData.kode" placeholder="Kode (Misal: MK04)" @keyup.enter="tambahData">
+            <input type="text" v-model="formData.judul" placeholder="Judul Buku" @keyup.enter="tambahData">
+            <input type="text" v-model="formData.kategori" placeholder="Kategori" @keyup.enter="tambahData">
+            <input type="number" v-model="formData.harga" placeholder="Harga (Rp)" @keyup.enter="tambahData">
+            <input type="number" v-model="formData.qty" placeholder="Jumlah Stok" @keyup.enter="tambahData">
+            <input type="number" v-model="formData.safety" placeholder="Safety Stok" @keyup.enter="tambahData">
+
+            <button @click="tambahData" style="background-color: #3b82f6;">Simpan Data</button>
+        </div>
+
+        <p v-if="errorMessage" style="color: #ef4444; font-size: 13px; margin-top: 10px; font-weight: 500;">
+            {{ errorMessage }}
+        </p>
+    </div>
+
+    <div class="filter-section">
+        <h3>Filter & Sortir Data</h3>
+        <label>UT-Daerah:</label>
+        <select v-model="filterUpbjj">
+            <option value="">-- Semua Daerah --</option>
+            <option v-for="upbjj in daftarUpbjj" :value="upbjj">{{ upbjj }}</option>
+        </select>
+
+        <span v-show="filterUpbjj">
+            <label style="margin-left: 15px;">Kategori:</label>
+            <select v-model="filterKategori">
+                <option value="">-- Semua Kategori --</option>
+                <option v-for="kat in daftarKategori" :value="kat">{{ kat }}</option>
+            </select>
+        </span>
+
+        <label style="margin-left: 15px; cursor: pointer;">
+            <input type="checkbox" v-model="filterStokKritis"> Stok Kritis
+        </label>
+
+        <br><br>
+        <label>Urutkan:</label>
+        <select v-model="sortBy">
+            <option value="">-- Tidak Diurutkan --</option>
+            <option value="judul_asc">Judul (A-Z)</option>
+            <option value="stok_asc">Stok (Terkecil)</option>
+            <option value="stok_desc">Stok (Terbesar)</option>
+            <option value="harga_asc">Harga (Termurah)</option>
+            <option value="harga_desc">Harga (Termahal)</option>
+        </select>
+        <button @click="resetFilter" style="margin-left: 15px;">Reset Filter</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Kode</th>
+                <th>Judul</th>
+                <th>Kategori</th>
+                <th>UT-Daerah</th>
+                <th>Lokasi Rak</th>
+                <th>Harga</th>
+                <th>Stok</th>
+                <th>Safety</th>
+                <th>Status</th>
+                <th>Aksi</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(item, index) in processedItems" :key="item.kode">
+                <template v-if="editingKode !== item.kode">
+                    <td>{{ item.kode }}</td>
+                    <td>{{ item.judul }}</td>
+                    <td>{{ item.kategori }}</td>
+                    <td>{{ item.upbjj }}</td>
+                    <td>{{ item.lokasiRak }}</td>
+                    <td>{{ item.harga | formatRupiah }}</td>
+                    <td>{{ item.qty | formatBuah }}</td>
+                    <td>{{ item.safety | formatBuah }}</td>
+                    <td class="tooltip-container">
+                        <status-badge :qty="item.qty" :safety="item.safety"></status-badge>
+                        <div class="tooltip-box" v-html="item.catatanHTML"></div>
+                    </td>
+                    <td>
+                        <button @click="mulaiEdit(item)">Edit</button>
+                        <button @click="hapusData(item.kode)">Hapus</button>
+                    </td>
+                </template>
+
+                <template v-else>
+                    <td>{{ item.kode }}</td>
+                    <td><input type="text" class="edit-input" v-model="editFormData.judul" @keyup.enter="simpanEdit"></td>
+                    <td><input type="text" class="edit-input" v-model="editFormData.kategori" @keyup.enter="simpanEdit"></td>
+                    <td><input type="text" class="edit-input" v-model="editFormData.upbjj" @keyup.enter="simpanEdit"></td>
+                    <td><input type="text" class="edit-input" v-model="editFormData.lokasiRak" @keyup.enter="simpanEdit"></td>
+                    <td><input type="number" class="edit-input" v-model="editFormData.harga" @keyup.enter="simpanEdit"></td>
+                    <td><input type="number" class="edit-input" v-model="editFormData.qty" @keyup.enter="simpanEdit"></td>
+                    <td><input type="number" class="edit-input" v-model="editFormData.safety" @keyup.enter="simpanEdit"></td>
+                    <td><i>(Auto)</i></td>
+                    <td>
+                        <button @click="simpanEdit" style="color: #10b981;">Simpan</button>
+                        <button @click="batalEdit" style="color: #ef4444;">Batal</button>
+                    </td>
+                </template>
+            </tr>
+        </tbody>
+    </table>
+</div>

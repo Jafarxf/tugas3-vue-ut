@@ -1,0 +1,73 @@
+<div class="tracking-container">
+    <h2>Tracking Delivery Order (DO)</h2>
+    <div class="form-section">
+        <h3>Buat Delivery Order Baru</h3>
+        
+        <div class="form-grid">
+            <input type="text" :value="generateNoDO" disabled title="Auto Generated" style="background-color: #e2e8f0; color: #64748b; cursor: not-allowed;">
+            <input type="text" v-model="formDO.nim" placeholder="NIM Mahasiswa">
+            <input type="text" v-model="formDO.nama" placeholder="Nama Mahasiswa">
+            
+            <select v-model="formDO.ekspedisi">
+                <option value="">-- Pilih Ekspedisi --</option>
+                <option v-for="eks in ekspedisiList" :value="eks.nama">{{ eks.kode }} - {{ eks.nama }}</option>
+            </select>            <select v-model="formDO.paketKode">
+                <option value="">-- Pilih Paket Bahan Ajar --</option>
+                <option v-for="pkt in paketList" :value="pkt.kode">{{ pkt.kode }} - {{ pkt.nama }}</option>
+            </select>
+            
+            <button @click="tambahDO" style="padding: 10px; height: 100%;">Buat DO</button>
+        </div>
+        
+        <div v-if="selectedPaketDetail" style="margin-top: 15px; padding: 10px; background-color: #e0f2fe; border: 1px solid #bae6fd; border-radius: 6px; font-size: 14px; color: #0369a1;">
+            <b>Detail Paket:</b> {{ selectedPaketDetail.isi.join(', ') }} <br>
+            <b>Harga:</b> {{ selectedPaketDetail.harga | formatRupiah }}
+        </div>
+        
+        <p v-if="errorMessage" style="color: #ef4444; font-size: 13px; margin-top: 10px; font-weight: 500;">
+            {{ errorMessage }}
+        </p>
+    </div>
+    
+    <!-- Form Pencarian -->
+    <div style="margin-bottom: 20px; padding: 15px; background-color: #f0f8ff; border: 1px solid #b0c4de;">
+        <h3>Cari Resi DO</h3>
+        <p style="font-size: 12px; color: gray;">Ketik Nomor DO atau NIM, lalu tekan <b>Enter</b> untuk mencari. Tekan <b>Esc</b> untuk reset.</p>
+        <input type="text" 
+               v-model="searchQuery" 
+               placeholder="Masukkan No DO atau NIM..." 
+               @keyup.enter="doSearch" 
+               @keyup.esc="resetSearch"
+               style="width: 300px; padding: 8px;">
+        <button @click="doSearch">Cari</button>
+        <button @click="resetSearch">Reset</button>
+    </div>    
+    
+    <!-- List Tracking DO -->
+    <div v-for="item in filteredTracking" :key="item.noDO" class="tracking-card">
+        <div style="display: flex; justify-content: space-between; border-bottom: 1px solid #eee; padding-bottom: 10px; margin-bottom: 10px;">
+            <div>
+                <h3 style="margin: 0; color: #2196F3;">{{ item.noDO }}</h3>
+                <small>NIM: {{ item.nim }} | Nama: {{ item.nama }}</small>
+            </div>
+            <div style="text-align: right;">
+                <strong>{{ item.ekspedisi }}</strong><br>
+                <small>Dikirim: {{ item.tanggalKirim }}</small>
+            </div>
+        </div>
+        
+        <p><b>Paket:</b> {{ item.paket }} ({{ item.totalHarga | formatRupiah }})</p>
+        
+        <h4>Riwayat Perjalanan:</h4>
+        <ul>
+            <li v-for="prog in item.progress">
+                <b>{{ prog.waktu }}</b> - {{ prog.keterangan }}
+            </li>
+        </ul>
+        <button @click="tambahProgress(item.noDO)">+ Update Status Pengiriman</button>
+    </div>
+    
+    <div v-if="filteredTracking.length === 0" style="color: red;">
+        Data tidak ditemukan.
+    </div>
+</div>

@@ -1,0 +1,299 @@
+/* Import font Inter untuk tipografi modern */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+/* Pengaturan dasar halaman dan warna latar */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f1f5f9; 
+    color: #334155;
+    margin: 0;
+    padding: 30px 20px;
+    line-height: 1.6;
+}
+
+/* Pembatas lebar maksimal aplikasi */
+#app {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* Desain menu navigasi atas (Tab) */
+nav {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #e2e8f0;
+}
+
+/* Tombol navigasi dan efek interaktifnya */
+nav button {
+    background-color: transparent;
+    border: none;
+    color: #64748b;
+    font-size: 15px;
+    font-weight: 600;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+nav button:hover {
+    background-color: #e2e8f0;
+    color: #0f172a;
+}
+nav button:focus, nav button.active {
+    background-color: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 6px rgba(59, 130, 246, 0.3);
+}
+
+/* Kotak putih utama pembungkus konten (Card) */
+.stock-container, .tracking-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+}
+
+/* Format judul */
+h2 {
+    color: #0f172a;
+    margin-top: 0;
+    font-size: 24px;
+    border-bottom: 2px solid #f8fafc;
+    padding-bottom: 15px;
+    margin-bottom: 25px;
+}
+h3 {
+    color: #1e293b;
+    margin-top: 0;
+    font-size: 18px;
+}
+
+/* Desain area form dan filter */
+.form-section, .filter-section {
+    background-color: #f8fafc !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 10px;
+    padding: 20px !important;
+    margin-bottom: 30px !important;
+}
+
+/* Elemen input dan dropdown */
+input[type="text"], input[type="number"], select {
+    padding: 10px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: all 0.3s ease;
+    margin-right: 10px;
+    margin-bottom: 12px;
+    background-color: #fff;
+    color: #334155;
+}
+input:focus, select:focus {
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* Grid layout untuk merapikan kolom form otomatis */
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+.form-grid input {
+    width: 100%;
+    margin-bottom: 0; 
+    box-sizing: border-box;
+}
+
+/* Tombol aksi utama (Simpan/Tambah) */
+button {
+    background-color: #3b82f6; 
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 6px;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+    font-family: inherit;
+}
+button:hover { background-color: #2563eb; }
+button:active { transform: scale(0.98); }
+
+/* Tombol kecil khusus di dalam tabel (Edit/Hapus) */
+td button {
+    padding: 6px 12px;
+    font-size: 13px;
+    margin-right: 5px;
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #cbd5e1;
+}
+td button:hover { background-color: #e2e8f0; }
+td button:last-child { color: #ef4444; }
+td button:last-child:hover { background-color: #fee2e2; border-color: #f87171; }
+
+/* Desain tabel data dengan gaya Zebra Striping */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background-color: #fff;
+    border: 1px solid #cbd5e1 !important; 
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+th, td {
+    padding: 15px 16px;
+    border-bottom: 1px solid #e2e8f0 !important;
+    border-right: none !important;
+    border-left: none !important;
+    text-align: left;
+    font-size: 14px;
+    vertical-align: middle; 
+}
+th {
+    background-color: #f1f5f9; 
+    color: #334155;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-size: 12px;
+    letter-spacing: 0.5px;
+    border-bottom: 2px solid #cbd5e1 !important; 
+}
+tbody tr:nth-child(even) { background-color: #f8fafc; }
+tbody tr:nth-child(odd) { background-color: #ffffff; }
+tbody tr:hover {
+    background-color: #e2e8f0;
+    transition: background-color 0.2s ease;
+}
+
+/* Kolom input saat mode edit di tabel aktif */
+.edit-input {
+    width: 100%;
+    padding: 8px !important;
+    margin-bottom: 0 !important;
+    box-sizing: border-box;
+    border: 1px solid #94a3b8;
+}
+
+/* Tooltip melayang untuk catatan tambahan */
+.tooltip-container {
+    position: relative;
+    cursor: help;
+}
+.tooltip-box {
+    display: none;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #1e293b;
+    color: #f8fafc;
+    padding: 10px 14px;
+    border-radius: 8px;
+    white-space: nowrap;
+    z-index: 10;
+    font-size: 12px;
+    margin-bottom: 10px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+.tooltip-box::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -6px;
+    border-width: 6px;
+    border-style: solid;
+    border-color: #1e293b transparent transparent transparent;
+}
+.tooltip-container:hover .tooltip-box {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, 5px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Kotak resi pengiriman (Tracking DO) */
+.tracking-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-left: 5px solid #3b82f6; 
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tracking-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05);
+}
+.tracking-card h3 {
+    color: #0f172a;
+    font-size: 20px;
+}
+.tracking-card h4 {
+    margin-top: 20px;
+    margin-bottom: 15px;
+    color: #1e293b;
+    font-size: 15px;
+}
+
+/* Modifikasi list menjadi desain Timeline (Garis Waktu) */
+.tracking-card ul {
+    list-style-type: none; 
+    padding-left: 8px; 
+    margin: 0 0 20px 0;
+    background-color: transparent; 
+}
+.tracking-card li {
+    position: relative;
+    padding-left: 28px; 
+    padding-bottom: 18px; 
+    font-size: 13.5px;
+    color: #475569;
+    line-height: 1.5;
+}
+.tracking-card li:last-child {
+    padding-bottom: 0; 
+}
+
+/* Titik dan garis penghubung timeline */
+.tracking-card li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px; 
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #3b82f6; 
+    box-shadow: 0 0 0 4px #dbeafe; 
+    z-index: 2;
+}
+.tracking-card li:not(:last-child)::after {
+    content: '';
+    position: absolute;
+    left: 4px; 
+    top: 14px;
+    bottom: -4px; 
+    width: 2px;
+    background-color: #cbd5e1;
+    z-index: 1;
+}
+.tracking-card li b {
+    color: #0f172a;
+    font-weight: 600;
+}

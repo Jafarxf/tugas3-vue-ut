@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistem Bahan Ajar SITTA UT</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigasi -->
+        <nav style="margin-bottom: 20px;">
+            <button :class="{ active: tab === 'stok' }" @click="tab = 'stok'">Stok Bahan Ajar</button>
+            <button :class="{ active: tab === 'tracking' }" @click="tab = 'tracking'">Tracking DO</button>
+            <button :class="{ active: tab === 'order' }" @click="tab = 'order'">Pemesanan</button>
+        </nav>
+
+        <!-- Area Stok -->
+        <section v-show="tab === 'stok'">
+            <ba-stock-table :items="state.stok"></ba-stock-table>
+        </section>
+
+        <section v-show="tab === 'tracking'">
+            <do-tracking 
+                :data="state.tracking" 
+                :paket-list="state.paket" 
+                :ekspedisi-list="state.pengirimanList">
+            </do-tracking>
+        </section>
+
+        <section v-show="tab === 'order'">
+            <order-form 
+                :paket-list="state.paket" 
+                :ekspedisi-list="state.pengirimanList">
+            </order-form>
+        </section>
+
+        <!-- Modal Global -->
+        <app-modal ref="globalModal"></app-modal>
+    </div>
+
+    <!-- TEMPLATE 1: STOK BAHAN AJAR -->
+    <template id="tpl-stock">
+    </template>
+
+    <!-- TEMPLATE 2: TRACKING DO -->
+    <template id="tpl-tracking">
+    </template>
+
+    <!-- TEMPLATE 3: STATUS BADGE -->
+    <template id="tpl-badge">
+    </template>
+
+    <!-- TEMPLATE 4: ORDER FORM -->
+    <template id="tpl-order">
+    </template>
+
+    <!-- TEMPLATE 5: APP MODAL -->
+    <template id="tpl-modal">
+    </template>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+    <script src="js/services/api.js"></script>
+    
+    <!-- Register Components -->
+    <script src="js/components/status-badge.js"></script>
+    <script src="js/components/app-modal.js"></script>
+    <script src="js/components/order-form.js"></script>
+    <script src="js/components/stock-table.js"></script>
+    <script src="js/components/do-tracking.js"></script>
+    
+    <script src="js/app.js"></script>
+</body>
+</html>
